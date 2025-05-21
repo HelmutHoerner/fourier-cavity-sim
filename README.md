@@ -1,8 +1,8 @@
 # fo_cavity_sim
 
-**Fourier Optics Cavity Simulation Tools**
+**Fourier Optics Cavity Simulation Library**
 
-This Python package provides tools for simulating optical cavities (linear cavities and ring cavities) using Fourier optics methods. 
+This Python package provides a software library for simulating optical cavities (linear cavities and ring cavities) using Fourier optics methods. 
 
 ---
 
