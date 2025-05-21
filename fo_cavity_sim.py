@@ -5,9 +5,6 @@ Created on Fri Mar  8 14:52:15 2024
 """
 import os    
 import numpy as np
-#import jax
-#jax.config.update("jax_enable_x64", True)
-#import jax.numpy as jnp
 import math
 from scipy.sparse import diags, spmatrix
 from abc import ABC, abstractmethod
@@ -29,13 +26,16 @@ import string
 import joblib
 import gc
 from functools import partial
+import importlib.resources
 #from matplotlib.ticker import MaxNLocator, FormatStrFormatter
 #import cmath
 #import scipy
 #from scipy.sparse.linalg import inv
+#import jax
+#jax.config.update("jax_enable_x64", True)
+#import jax.numpy as jnp
 
-
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 #############################################################################
 # Enums
 #############################################################################
@@ -3153,7 +3153,9 @@ class clsLightField(ABC):
             bar_txt = "intensity"
             
         if c_map == "custom":
-            rgb_table = pd.read_csv('cmap_custom.csv', header=None)            
+            with importlib.resources.open_text(__package__ or __name__, 
+                                               'cmap_custom.csv') as f:
+                rgb_table = pd.read_csv(f, header=None)            
             rgb_values = rgb_table.values   # Normalize RGB values 
             c_map = ListedColormap(rgb_values)
             #c_map = LinearSegmentedColormap.from_list('cmap_custom', 

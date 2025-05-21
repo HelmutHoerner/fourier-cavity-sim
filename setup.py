@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name='fo_cavity_sim',
-    version='1.0.0',
+    version='1.0.1',
     py_modules=['fo_cavity_sim'],
     include_package_data=True,
     package_data={
