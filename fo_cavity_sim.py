@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Mar  8 14:52:15 2024
-
 @author: Helmut Hoerner
 """
 import os    
