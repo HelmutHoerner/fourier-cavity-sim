@@ -35,7 +35,7 @@ import importlib.resources
 #jax.config.update("jax_enable_x64", True)
 #import jax.numpy as jnp
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 #############################################################################
 # Enums
 #############################################################################

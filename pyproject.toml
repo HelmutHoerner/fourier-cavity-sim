@@ -4,6 +4,23 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fo_cavity_sim"
-version = "1.0.1"
+version = "1.0.2"
 description = "Fourier optics cavity simulation tools"
-authors = [{ name = "Helmut Hörner" }]
+authors = [
+  { name = "Helmut Hoerner" }
+]
+dependencies = [
+  "numpy",
+  "scipy",
+  "matplotlib",
+  "pandas",
+  "joblib",
+  "portalocker"
+]
+
+[tool.setuptools]
+packages = ["fo_cavity_sim"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"fo_cavity_sim" = ["cmap_custom.csv"]
