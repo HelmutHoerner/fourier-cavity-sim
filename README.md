@@ -8,7 +8,7 @@ This Python package provides a software library for simulating optical cavities 
 
 ## Installation
 
-###  Recommended (editable install for development)
+###  Recommended 
 
 Clone the repository and install with pip (requires Python ≥3.8):
 
