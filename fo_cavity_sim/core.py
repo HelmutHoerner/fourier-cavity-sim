@@ -36,6 +36,7 @@ import importlib.resources
 #import jax.numpy as jnp
 
 __version__ = "1.0.2"
+
 #############################################################################
 # Enums
 #############################################################################
@@ -589,7 +590,7 @@ def bmat4_conj_transpose(X):
 
 def bmat2_M_to_S(M, p = None, msg = ""):
     """ 
-    converts the transfer matrix  into the scattering matrix S
+    converts the transfer matrix M into the scattering matrix S
     both M and S are block matrices
     if p is set to a clsProgressPrinter instance, then tics are sent
     if msg != "" the the progress printer is resetted
@@ -1250,7 +1251,7 @@ class clsBlockMatrix:
         
         
         if quadrant<1 or quadrant>4:
-            raise ValueError("qudrant must be 1, 2,3 or 4")
+            raise ValueError("quadrant must be 1, 2,3 or 4")
         
         quadrant = quadrant - 1
         if  self.__dim == 2:            
@@ -1737,7 +1738,7 @@ class clsGrid:
         return new_array
     
     def dist_to_pixels(self, dist):
-        """ converts the distace dist to picels (integer value)"""
+        """ converts the distance dist to pixels (integer value)"""
         pix_per_m = self.res_tot/self.length_tot # pixels per m
         return int(round(dist * pix_per_m))
     
@@ -2152,7 +2153,7 @@ class clsGrid:
             N = self.__res_fov
             
         c = N // 2        
-        #if c-nx>=0 and c-nx < N and c-ny>=0 and c-ny < N:    
+        
         return c-ny, c-nx
     
     @property
@@ -3801,7 +3802,7 @@ class clsOptComponent(ABC):
     
     @property
     def cavity(self):
-        """ returns the grid instance """
+        """ returns the cavity instance """
         return self.__cavity
     
     @property
@@ -4538,7 +4539,7 @@ class clsTransmissionTilt(clsOptComponent2port):
 
 ###############################################################################
 # clsMirrorBase2port
-# base clas for flat and curved mirror
+# base class for flat and curved mirror
 ############################################################################### 
 class clsMirrorBase2port(clsOptComponent2port):
     def __init__(self, name, cavity):
@@ -5171,7 +5172,7 @@ class clsMirrorBase2port(clsOptComponent2port):
         return self._tilt_mask_y_R
     
 ###############################################################################
-# represents a (smitransparent) curved mirror
+# represents a (semitransparent) curved mirror
 ############################################################################### 
 class clsCurvedMirror(clsMirrorBase2port):
     def __init__(self, name, cavity):
@@ -6245,7 +6246,7 @@ class clsCurvedMirror(clsMirrorBase2port):
 
 ###############################################################################
 # clsGrating
-# represents a thin grating (periodic absoption or phase changes)
+# represents a thin grating (periodic absoption or periodic phase changes)
 ###############################################################################        
 class clsGrating(clsOptComponent2port):
     def __init__(self, name, cavity):
@@ -6359,7 +6360,8 @@ class clsGrating(clsOptComponent2port):
         returns (optimized) values dx, x_max, dy, y_max
         """
         if not self.cavity is None:
-            self.cavity.clear()        
+            self.cavity.clear()   
+        self.clear_mem_cache()
         if min_val > max_val:  
             min_val, max_val = max_val, min_val
         
@@ -7376,7 +7378,7 @@ class clsThinLens(clsOptComponent2port):
         
 ###############################################################################
 # Amplitude Scaling
-# increases or deerduces the amplitude
+# increases or reduces the amplitude
 ###############################################################################
 class clsAmplitudeScaling(clsOptComponent2port):
     def __init__(self, name, cavity):
@@ -7971,12 +7973,12 @@ class clsMirror(clsMirrorBase2port):
     @clsMirrorBase2port.incident_angle_y_deg.setter
     def incident_angle_y_deg(self, alpha):     
         clsMirrorBase2port.incident_angle_y_deg.fset(self, alpha)        
-        # TODO: clear mem           
+        self.clear_mem_cache()           
      
     @clsMirrorBase2port.incident_angle_y.setter
     def incident_angle_y(self, alpha):        
         clsMirrorBase2port.incident_angle_y.fset(self, alpha) 
-        # TODO: clear mem
+        self.clear_mem_cache()
     
     def clear_mem_cache(self):   
         super().clear_mem_cache()
@@ -8516,7 +8518,7 @@ class clsMirror(clsMirrorBase2port):
 
 ###############################################################################
 # clsSplitMirror
-# represents a partially reflective mirror with different refletivities
+# represents a partially reflective mirror with different reflectivities
 # in the upper and the lower half
 ############################################################################### 
 class clsSplitMirror(clsOptComponent2port):
@@ -9126,7 +9128,7 @@ class clsSplitMirror(clsOptComponent2port):
             for nx, ny in self.grid.mode_numbers_tot:            
                 psi = self.grid.fourier_basis_func(nx, ny, True, False)
                 self.__apply_r1r2(psi, Side.LEFT) 
-                if self.__right_side_relevant:
+                if self.__left_side_relevant:
                     if self.__rot_around_y_deg != 0:
                         psi *= self.__tilt_mask_x_L 
                     if self.__rot_around_x_deg != 0:
@@ -9833,10 +9835,6 @@ class clsCavity(ABC):
         
     def _get_M_bmat_tot_considering_caching(self, step, idx_from, idx_to):
         """ Get M matrix from component considering all caching settings"""
-        #keep_clsBlockMatrix_alive(True)
-        #self.progress.push_print("sleeping")
-        #time.sleep(30)
-        #self.progress.pop()
         component = self.components[step]
         predefined_file_caching = component.file_cache_M_bmat
         predefined_mem_caching = component.mem_cache_M_bmat
@@ -10049,14 +10047,6 @@ class clsCavity(ABC):
                 self.load_M_bmat()                
                 
             M2, del_component = self._get_M_bmat_tot_considering_caching(s1, 0, self.component_count)
-                       
-            #print("self.M_bmat_tot.file_names")
-            #if self.M_bmat_tot is None:
-            #    print ("None")
-            #else:
-            #    print(self.M_bmat_tot.file_names)
-            #print("self.M2.file_names")
-            #print(M2.file_names)
                          
             self.progress.push_print("processing transfer matrix M")
             if self.M_bmat_tot is None:
@@ -10173,7 +10163,6 @@ class clsCavity1path(clsCavity):
         self.__incident_field_right = None
         self.__output_field_left = None
         self.__output_field_right = None
-        self.__bulk_field_LTR = None
         self.__bulk_field_RTL = None
         self.__bulk_field_pos = None
         self.__use_bmatrix_class = True
@@ -10661,8 +10650,7 @@ class clsCavity1path(clsCavity):
             idx_to -= 1
             idx_dir = -1
             
-        
-        #prv_k_sp_out = field.k_space
+            
         for idx in range(idx_from, idx_to, idx_dir):
             # determine if it is better to "interface" in k-space
             # or position space
@@ -10678,7 +10666,7 @@ class clsCavity1path(clsCavity):
                 nxt_k_sp_in_dont_care = nxt_component.k_space_in_dont_care
             
             component = self.get_component(idx)
-            # print("processing component",idx,":",component.name) 
+            
             self.progress.print(f"processing component {idx}: {component.name}")
             # by default: position-space as output for current component
             k_space_out = False
@@ -10794,10 +10782,10 @@ class clsCavity1path(clsCavity):
                                       x_plot_shift = 0, y_plot_shift = 0):
         """
         Multiple LTR-RTL round-trips of field
-        It is assumed that the left incident field enteres the cavity LTR 
+        It is assumed that the left incident field enters the cavity LTR 
         through the component with idx1 and the right incident field enteres 
         the cavity RTL through the component with idx2 . 
-        Thecinside of the avity ends at the left side of the component with idx2.
+        The inside of the avity ends at the left side of the component with idx2.
         The effective left and right output fields are set.
         The bulk field on the right side of component with bulk_field_pos 
         is stored in .bulk_field_LTR and .bulk_field_RTL
@@ -11154,18 +11142,9 @@ class clsCavity1path(clsCavity):
         
         # right reflection
         self.progress.push_print("processing reflection at "+name2)
-        
-        
+                
         field = self.reflect(field, idx2, Side.LEFT)
         
-        #if isinstance(component2, clsMirror) or isinstance(component2, clsCurvedMirror):
-        #    k_space_in = field.k_space
-        #    k_space_out = False
-        #    E_out = component2.reflect(field.get_field_tot(k_space_in), k_space_in, k_space_out, Side.LEFT)
-        #    field.set_field(E_out, k_space_out)
-        #else:
-        #    field = field.apply_TR_mat(component2.R_L_mat_tot)
-            
         self.progress.pop()
         
         # right-to-left propagation
@@ -11492,20 +11471,12 @@ class clsCavity1path(clsCavity):
         if self.M_bmat_tot is None:
             self.calc_M_bmat_tot()
         M = self.M_bmat_tot
-        if isinstance(M, clsBlockMatrix):
-            #self.T_RTL_mat_tot = mat_minus(M.get_block(0,0), 
-            #                               mat_mul(
-            #                                   mat_div(
-            #                                       M.get_block(0,1), 
-            #                                       M.get_block(1,1), True), 
-            #                                   M.get_block(1,0)))
-            
+        if isinstance(M, clsBlockMatrix):                        
             self.T_RTL_mat_tot = None
             gc.collect()
             M01 = partial(M.get_block, 0, 1)
             M11 = partial(M.get_block, 1, 1)
-            tmp1 = mat_div_bm(M01, M11)
-            #tmp1 =  mat_div(M.get_block(0,1), M.get_block(1,1)) 
+            tmp1 = mat_div_bm(M01, M11)            
             gc.collect()
             tmp2 = mat_mul(tmp1, M.get_block(1,0))
             del tmp1
@@ -11555,15 +11526,6 @@ class clsOptComponent4port(clsOptComponent):
     def __init__(self, name, cavity):
         super().__init__(name, cavity) 
         
-    #@property
-    #def Lambda(self):
-    #    """ returns exact wavelength in m """
-    #    return super().Lambda
-    
-    #@Lambda.setter    
-    #def Lambda(self, Lambda: float):
-    #    """ sets wavelength in nm """
-    #    super().Lambda = Lambda
     
     @abstractmethod
     def get_R_bmat_tot(self, side: Side):     
@@ -11620,7 +11582,7 @@ class clsOptComponent4port(clsOptComponent):
     @abstractmethod
     def get_dist_opt(self):
         """ 
-        returns the physical distance for path A and path B
+        returns the optical distance for path A and path B
         """
         pass
     

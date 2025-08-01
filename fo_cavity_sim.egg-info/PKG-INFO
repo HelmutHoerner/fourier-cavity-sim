@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: fo_cavity_sim
+Version: 1.0.2
+Summary: Fourier optics cavity simulation tools
+Author: Helmut Hoerner
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: matplotlib
+Requires-Dist: pandas
+Requires-Dist: joblib
+Requires-Dist: portalocker

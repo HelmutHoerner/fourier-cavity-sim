@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the user manual."
+title: "fo_cavity_sim: A Python Library for Fourier-Optics Cavity Simulations"
+authors:
+  - family-names: "Hoerner"
+    given-names: "Helmut"
+    orcid: "https://orcid.org/0000-0002-1069-5868"
+version: "1.0.0"
+date-released: "2025-08-01"
+repository-code: "https://github.com/HelmutHoerner/fourier-cavity-sim"
+preferred-citation:
+  type: report
+  title: "fourier-cavity-sim: A Python Library for Fourier-Optics Cavity Simulations"
+  authors:
+    - family-names: "Hoerner"
+      given-names: "Helmut"
+  institution: "TU Wien"
+  year: 2025
+  url: "https://github.com/HelmutHoerner/fourier-cavity-sim/blob/main/docs/fo_cavity_sim_user_manual.pdf"
