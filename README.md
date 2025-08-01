@@ -48,7 +48,7 @@ pip install -e . --config-settings editable_mode=compat
 ### Please cite
 If you use **foourier-cavity-sim** in academic work, please cite the user manual:
 
-> H. Hoerner, *fourier-cavity-sim: A Python Library for Fourier-Optics Cavity Simulations* (User Manual), 2025.  
+> H. Hörner, *fourier-cavity-sim: A Python Library for Fourier-Optics Cavity Simulations* (User Manual), 2025.  
 > https://github.com/HelmutHoerner/fourier-cavity-sim/blob/main/docs/fo_cavity_sim_user_manual.pdf
 
 **BibTeX**
