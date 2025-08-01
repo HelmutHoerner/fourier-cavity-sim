@@ -55,7 +55,7 @@ If you use **fo_cavity_sim** in academic work, please cite the user manual:
 ```bibtex
 @manual{hoerner2025focavitysim,
   title   = {fourier-cavity-sim: A Python Library for Fourier-Optics Cavity Simulations (User Manual)},
-  author  = {Hoerner, Helmut},
+  author  = {Hörner, Helmut},
   year    = {2025},
   url     = {https://github.com/HelmutHoerner/fourier-cavity-sim/blob/main/docs/fo_cavity_sim_user_manual.pdf},
   note    = {Version 1.0}
