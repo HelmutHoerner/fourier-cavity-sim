@@ -1,4 +1,4 @@
-# fo_cavity_sim
+# fourier-cavity-sim
 
 **Fourier Optics Cavity Simulation Library**
 
