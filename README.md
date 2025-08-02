@@ -1,4 +1,4 @@
-# fourier-cavity-sim
+# fo_cavity_sim
 
 **Fourier Optics Cavity Simulation Library**
 
@@ -35,7 +35,7 @@ Alternatively, `pip install -e . --config-settings editable_mode=compat` will au
 
 Note: The command `conda install numpy blas=*=openblas` is particularly recommended if you're running the package on an AMD CPU, as the default NumPy builds are optimized for Intel and may run significantly slower on AMD systems.
 
-###  Recommended 
+###  Install Library
 
 Clone the repository and install with pip (requires Python ≥3.8):
 
