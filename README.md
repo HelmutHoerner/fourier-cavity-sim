@@ -21,7 +21,7 @@ The user manual contains:
 
 ### Requirements
 
-This package was tested in a Conda environment under MS Windows 10. You can manually create the environment like this:
+This package was tested in a Conda environment under MS Windows 10 and on the Vienna Scientific Cluster. You can manually create the environment on a local computer like this:
 
 ```bash
 conda create --name fourier-cavity-sim python=3.8.5
@@ -44,6 +44,8 @@ git clone https://github.com/HelmutHoerner/fourier-cavity-sim.git
 cd fourier-cavity-sim
 pip install -e . --config-settings editable_mode=compat
 ```
+
+Instructions on how to install the software on a cluster can be found in the user manual. 
 
 ### Please cite
 If you use **fourier-cavity-sim** in academic work, please cite the user manual:
