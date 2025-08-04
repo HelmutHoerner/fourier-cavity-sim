@@ -60,4 +60,4 @@ If you use **fourier-cavity-sim** in academic work, please cite the user manual:
   author  = {Hörner, Helmut},
   year    = {2025},
   url     = {https://github.com/HelmutHoerner/fourier-cavity-sim/blob/main/docs/fo_cavity_sim_user_manual.pdf},
-  note    = {Version 1.0}
+  note    = {Version 1.0}}
