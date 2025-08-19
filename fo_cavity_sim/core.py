@@ -35,7 +35,7 @@ import importlib.resources
 #jax.config.update("jax_enable_x64", True)
 #import jax.numpy as jnp
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 #############################################################################
 # Enums
@@ -4800,7 +4800,8 @@ class clsMirrorBase2port(clsOptComponent2port):
                 self.cavity.clear()       
             self.__rot_around_x_deg = alpha
             self.__rot_around_x = None            
-   
+            self.clear_mem_cache()
+        
     @property
     def rot_around_y_deg(self):
         """ 
@@ -4824,7 +4825,8 @@ class clsMirrorBase2port(clsOptComponent2port):
                 self.cavity.clear()       
             self.__rot_around_y_deg = alpha
             self.__rot_around_y = None            
-
+            self.clear_mem_cache()
+            
     @property
     def rot_around_x(self):
         """ 
@@ -4845,7 +4847,8 @@ class clsMirrorBase2port(clsOptComponent2port):
             if not self.cavity is None:
                 self.cavity.clear()       
             self.__rot_around_x = alpha
-            self.__rot_around_x_deg = None    
+            self.__rot_around_x_deg = None   
+            self.clear_mem_cache()
 
     @property
     def rot_around_y(self):
@@ -4868,6 +4871,7 @@ class clsMirrorBase2port(clsOptComponent2port):
                 self.cavity.clear()       
             self.__rot_around_y = alpha
             self.__rot_around_y_deg = None
+            self.clear_mem_cache()
 
     
     @property
